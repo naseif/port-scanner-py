@@ -15,21 +15,24 @@ def scan_port(ip, port):
     try:
         server_address = (ip, port)
         sock.connect(server_address)
-        print("- port " + str(port) + " is open")
         return True
     except:
-        print("- port " + str(port) + " is closed or filtered")
         pass
     finally:
         sock.close()
 
     return False
 
-def scanner(ip, fromPort, toPort):
+def scan_port_range(ip, fromPort, toPort):
+    result = []
     for port in range(fromPort, toPort):
-        scan_port(ip, port)
+        result += [f"{ip} - {port} = {scan_port(ip, port)}"]
+
+    return result    
     
 if __name__ == '__main__':
-    scanner("199.247.5.104", 20, 85)
+   scan_port_range("199.247.5.104", 20, 85)
+
+
 
 
