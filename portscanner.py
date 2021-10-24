@@ -24,15 +24,23 @@ def scan_port(ip, port):
     return False
 
 def scan_port_range(ip, fromPort, toPort):
+    """
+        scan a port range and return a list of ports and their states
+    """
     result = []
     for port in range(fromPort, toPort):
-        result += [f"{ip} - {port} = {scan_port(ip, port)}"]
-
+        result += [dict(
+            ip = ip,
+            port = port,
+            is_open = scan_port(ip, port)
+        )]
     return result    
     
 if __name__ == '__main__':
-   scan_port_range("199.247.5.104", 20, 85)
-
+    scan_result = scan_port_range("199.247.5.104", 20, 85)
+    for result in scan_result:
+        if result['is_open']:
+            print(f"{result['ip']} - {result['port']} = {result['is_open']}")
 
 
 
